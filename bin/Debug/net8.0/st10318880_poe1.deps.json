@@ -1,0 +1,49 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "st10318880_poe1/1.0.0": {
+        "dependencies": {
+          "System.Windows.Extensions": "9.0.4"
+        },
+        "runtime": {
+          "st10318880_poe1.dll": {}
+        }
+      },
+      "System.Windows.Extensions/9.0.4": {
+        "runtime": {
+          "lib/net8.0/System.Windows.Extensions.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.425.16305"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net8.0/System.Windows.Extensions.dll": {
+            "rid": "win",
+            "assetType": "runtime",
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.425.16305"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "st10318880_poe1/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.Windows.Extensions/9.0.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-LBfgiBxCpJWch0PI7h55FyzlCdSXxBZM2/B/H+v1SBkhux/Da8L3fIP+r7WFwNuTfKiClNfB0Ne3BL12xiCEGw==",
+      "path": "system.windows.extensions/9.0.4",
+      "hashPath": "system.windows.extensions.9.0.4.nupkg.sha512"
+    }
+  }
+}
