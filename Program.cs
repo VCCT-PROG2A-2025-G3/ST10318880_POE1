@@ -53,16 +53,19 @@ namespace ST10318880_POE1
                                                                              @@@@@@@@               
 ";
 
+            // Ascii styling
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine(asciiArt);
             Console.ResetColor();
 
+            // Welcome Message Box
             string message = $"Welcome, {name}";
             int totalWidth = 90; // Width of the ascii art
             string paddedMessage =
                 $"║{message.PadLeft((totalWidth - 2 + message.Length) / 2).PadRight(totalWidth - 2)}║";
             string border = new string('═', totalWidth - 2);
 
+            // Welcome styling
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"╔{border}╗");
             Console.WriteLine(paddedMessage);
@@ -71,17 +74,18 @@ namespace ST10318880_POE1
 
             // ---------------------------------------------------------------------------------------------------------------
 
+            // Bot typing function
             static void TypeDelay(
-                string message,
-                int delay = 20,
+                string message, // Bot response
+                int delay = 20, // Millisecond delay between characters
                 ConsoleColor color = ConsoleColor.Blue
             )
             {
                 Console.ForegroundColor = color;
-                foreach (char c in message)
+                foreach (char c in message) // Loop through each character in message
                 {
-                    Console.Write(c);
-                    Thread.Sleep(delay);
+                    Console.Write(c); // Print character
+                    Thread.Sleep(delay); // Wait for the delay, simulates typing effect
                 }
                 Console.WriteLine();
                 Console.ResetColor();
@@ -89,11 +93,13 @@ namespace ST10318880_POE1
 
             // ---------------------------------------------------------------------------------------------------------------
 
-            string botTag = "🤖: ";
-            string userTag = "🙋: ";
+            // Loop variables
+            string botTag = "🤖: "; // Bot tag prefixed to bot responses
+            string userTag = "🙋: "; // User tag prefixed to user input
             string divider = new string('═', 80);
 
-            while (true)
+            // Conversation loop
+            while (true) // Infinite loop until break is hit (exit / bye)
             {
                 TypeDelay("\n" + botTag + "Ask me something (type 'exit' to quit): ");
 
@@ -110,7 +116,7 @@ namespace ST10318880_POE1
                     Console.WriteLine(divider);
                     break;
                 }
-                else if (string.IsNullOrWhiteSpace(input))
+                else if (string.IsNullOrWhiteSpace(input)) // If user accidentally presses enter
                 {
                     TypeDelay("\n" + botTag + "I didn't quite catch that. Could you try again?");
 
