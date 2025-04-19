@@ -16,3 +16,4 @@ C:\Users\kenan\documents\code\prog6211\st10318880_poe1\obj\Debug\net8.0\refint\s
 C:\Users\kenan\documents\code\prog6211\st10318880_poe1\obj\Debug\net8.0\st10318880_poe1.pdb
 C:\Users\kenan\documents\code\prog6211\st10318880_poe1\obj\Debug\net8.0\st10318880_poe1.genruntimeconfig.cache
 C:\Users\kenan\documents\code\prog6211\st10318880_poe1\obj\Debug\net8.0\ref\st10318880_poe1.dll
+C:\Users\kenan\documents\code\prog6211\st10318880_poe1\obj\Debug\net8.0\st10318880_poe1.sourcelink.json
