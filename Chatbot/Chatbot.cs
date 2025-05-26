@@ -5,20 +5,20 @@ namespace ST10318880_POE1
         private string? userName;
         private string? favouriteTopic;
 
-        // Bot visuals
-        private readonly string botTag = "🤖: "; // Bot tag prefixed to bot responses
-        private readonly string userTag = "🙋: "; // User tag prefixed to user input
-        private readonly string divider = new('═', 80); // Line divider
-        private readonly Random rng = new();
-        private string? lastTopic = null;
+        // Bot interface elements
+        private readonly string botTag = "🤖: "; // Bot prefix for responses
+        private readonly string userTag = "🙋: "; // User prefix for input
+        private readonly string divider = new('═', 80); // Visual divider line for separation
+        private readonly Random rng = new(); // Random generator for varied responses
+        private string? lastTopic = null; // Track last topic for follow-ups
 
-        // Entry point of the chatbot logic
+        // Start the chatbot session with the provided user name
         public void Start(string nameInput)
         {
             userName = nameInput;
             DisplayWelcome(userName);
 
-            // Ask user for favourite topic
+            // Ask user to choose their favorite topic
             Console.WriteLine();
             TypeDelay(botTag + $"Welcome, {userName}! Here are some topics I can talk about:");
             TypeDelay(botTag + "• Password Safety");
@@ -26,12 +26,13 @@ namespace ST10318880_POE1
             TypeDelay(botTag + "• Safe Browsing");
             TypeDelay(botTag + "What’s your favourite topic?");
 
+            // Read user's topic choice
             Console.Write(userTag);
             Console.ForegroundColor = ConsoleColor.Yellow;
             string topicInput = (Console.ReadLine() ?? "").ToLower().Trim();
             Console.ResetColor();
 
-            // Store favourite topic
+            // Store a simplified version of the user's favorite topic
             if (topicInput.Contains("password"))
                 favouriteTopic = "password";
             else if (topicInput.Contains("phishing"))
@@ -56,7 +57,7 @@ namespace ST10318880_POE1
 
             Console.WriteLine(divider);
 
-            // Begin chat loop
+            // Main chatbot loop
             while (true)
             {
                 TypeDelay(botTag + "Ask me something (type 'exit' to quit): ");
@@ -67,6 +68,7 @@ namespace ST10318880_POE1
                 string input = (Console.ReadLine() ?? "").ToLower().Trim();
                 Console.ResetColor();
 
+                // Exit condition
                 if (input.Contains("exit") || input.Contains("bye"))
                 {
                     TypeDelay(botTag + $"Goodbye {userName}, and stay safe online!");
@@ -75,6 +77,7 @@ namespace ST10318880_POE1
                 }
                 else if (string.IsNullOrWhiteSpace(input))
                 {
+                    // Handle empty input
                     TypeDelay(botTag + "I didn't quite catch that. Could you try again?");
                     Console.WriteLine(divider);
                     continue;
@@ -84,11 +87,11 @@ namespace ST10318880_POE1
             }
         }
 
-        // Welcome Message Box
+        // Display a stylized welcome box with the user's name
         private void DisplayWelcome(string name)
         {
             string message = $"Welcome, {name}";
-            int totalWidth = 90; // Width of ASCII art box
+            int totalWidth = 90;
             string paddedMessage =
                 $"║{message.PadLeft((totalWidth - 2 + message.Length) / 2).PadRight(totalWidth - 2)}║";
             string border = new string('═', totalWidth - 2);
@@ -100,11 +103,12 @@ namespace ST10318880_POE1
             Console.ResetColor();
         }
 
-        // Respond based on keyword detection
+        // Respond to user input by detecting keywords and sentiment
         private void Respond(string input)
         {
             string sentiment = DetectSentiment(input);
 
+            // Detect follow-up intent
             bool isFollowUp =
                 input.Contains("more")
                 || input.Contains("explain")
@@ -120,6 +124,7 @@ namespace ST10318880_POE1
                 return;
             }
 
+            // Direct response based on topic keywords
             if (input.Contains("how are you"))
             {
                 lastTopic = "how";
@@ -212,6 +217,7 @@ namespace ST10318880_POE1
             {
                 lastTopic = null;
 
+                // Responses based on sentiment if topic is unknown
                 string[] neutralResponses = new[]
                 {
                     "I'm not sure how to answer that yet. Try asking about cybersecurity topics!",
@@ -240,23 +246,13 @@ namespace ST10318880_POE1
                     "Curiosity is the first step to becoming cyber smart!",
                 };
 
-                string[] selected;
-
-                switch (sentiment)
+                string[] selected = sentiment switch
                 {
-                    case "frustrated":
-                        selected = frustratedResponses;
-                        break;
-                    case "worried":
-                        selected = worriedResponses;
-                        break;
-                    case "curious":
-                        selected = curiousResponses;
-                        break;
-                    default:
-                        selected = neutralResponses;
-                        break;
-                }
+                    "frustrated" => frustratedResponses,
+                    "worried" => worriedResponses,
+                    "curious" => curiousResponses,
+                    _ => neutralResponses,
+                };
 
                 TypeDelay(botTag + GetRandomResponse(selected, userName));
             }
@@ -264,13 +260,14 @@ namespace ST10318880_POE1
             Console.WriteLine(divider);
         }
 
+        // Select a random response and personalize it with the user's name if available
         private string GetRandomResponse(string[] options, string? name = null)
         {
             string response = options[rng.Next(options.Length)];
             return name != null ? $"Sure, {name}! {response}" : response;
         }
 
-        // Typing effect for chatbot output
+        // Simulate typing animation effect when displaying bot messages
         private static void TypeDelay(
             string message,
             int delay = 20,
@@ -280,65 +277,55 @@ namespace ST10318880_POE1
             Console.ForegroundColor = color;
             foreach (char c in message)
             {
-                Console.Write(c); // Print character
-                Thread.Sleep(delay); // Wait for delay to simulate typing
+                Console.Write(c);
+                Thread.Sleep(delay);
             }
             Console.WriteLine();
             Console.ResetColor();
         }
 
+        // Handle follow-up questions by referencing the last known topic
         private void HandleFollowUp()
         {
-            string[] details;
-
-            switch (lastTopic)
+            string[] details = lastTopic switch
             {
-                case "password":
-                    details = new[]
-                    {
-                        "You should also change passwords regularly and avoid saving them in your browser.",
-                        "Use a password manager to generate and store strong, unique passwords.",
-                        "Two-factor authentication (2FA) adds another layer of password security.",
-                    };
-                    break;
-                case "phishing":
-                    details = new[]
-                    {
-                        "Phishing can happen through email, social media, or fake websites.",
-                        "Legitimate companies never ask for sensitive info via email.",
-                        "Look out for generic greetings like 'Dear user' — it’s a red flag.",
-                    };
-                    break;
-                case "browsing":
-                    details = new[]
-                    {
-                        "Always use antivirus software and keep your browser up to date.",
-                        "Avoid clicking on pop-ups or downloading unknown browser extensions.",
-                        "Using a VPN helps keep your internet activity private.",
-                    };
-                    break;
-                case "purpose":
-                    details = new[]
-                    {
-                        "I'm designed to simulate a helpful cybersecurity assistant for learning.",
-                        "My goal is to raise awareness about staying safe online.",
-                        "Think of me as a guide through basic digital security concepts.",
-                    };
-                    break;
-                default:
-                    details = new[]
-                    {
-                        "Could you clarify what you'd like to know more about?",
-                        "I'm not sure how to expand on that yet.",
-                        "Please ask another cybersecurity-related question!",
-                    };
-                    break;
-            }
+                "password" => new[]
+                {
+                    "You should also change passwords regularly and avoid saving them in your browser.",
+                    "Use a password manager to generate and store strong, unique passwords.",
+                    "Two-factor authentication (2FA) adds another layer of password security.",
+                },
+                "phishing" => new[]
+                {
+                    "Phishing can happen through email, social media, or fake websites.",
+                    "Legitimate companies never ask for sensitive info via email.",
+                    "Look out for generic greetings like 'Dear user' — it’s a red flag.",
+                },
+                "browsing" => new[]
+                {
+                    "Always use antivirus software and keep your browser up to date.",
+                    "Avoid clicking on pop-ups or downloading unknown browser extensions.",
+                    "Using a VPN helps keep your internet activity private.",
+                },
+                "purpose" => new[]
+                {
+                    "I'm designed to simulate a helpful cybersecurity assistant for learning.",
+                    "My goal is to raise awareness about staying safe online.",
+                    "Think of me as a guide through basic digital security concepts.",
+                },
+                _ => new[]
+                {
+                    "Could you clarify what you'd like to know more about?",
+                    "I'm not sure how to expand on that yet.",
+                    "Please ask another cybersecurity-related question!",
+                },
+            };
 
             TypeDelay(botTag + GetRandomResponse(details, userName));
             Console.WriteLine(divider);
         }
 
+        // Basic sentiment analysis based on presence of keywords
         private string DetectSentiment(string input)
         {
             if (input.Contains("worried") || input.Contains("scared") || input.Contains("nervous"))

@@ -18,8 +18,8 @@ namespace ST10318880_POE1
                 Console.Write("Enter your name: ");
                 name = Console.ReadLine()?.Trim();
 
-                // Validate name: non-empty, alphabetical, at least 2 characters
-                if (!string.IsNullOrWhiteSpace(name) && name.All(char.IsLetter) && name.Length >= 2)
+                // Validate name: non-empty, alphabetical, at least 3 characters
+                if (!string.IsNullOrWhiteSpace(name) && name.All(char.IsLetter) && name.Length >=3)
                 {
                     break;
                 }
