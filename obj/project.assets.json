@@ -60,11 +60,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\kenan\\documents\\code\\prog6211\\st10318880_poe1\\st10318880_poe1.csproj",
+      "projectUniqueName": "C:\\Users\\kenan\\documents\\code\\PROG6211\\ST10318880_POE1\\st10318880_poe1.csproj",
       "projectName": "st10318880_poe1",
-      "projectPath": "C:\\Users\\kenan\\documents\\code\\prog6211\\st10318880_poe1\\st10318880_poe1.csproj",
+      "projectPath": "C:\\Users\\kenan\\documents\\code\\PROG6211\\ST10318880_POE1\\st10318880_poe1.csproj",
       "packagesPath": "C:\\Users\\kenan\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\kenan\\documents\\code\\prog6211\\st10318880_poe1\\obj\\",
+      "outputPath": "C:\\Users\\kenan\\documents\\code\\PROG6211\\ST10318880_POE1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\kenan\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -117,7 +117,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.408/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.410/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
