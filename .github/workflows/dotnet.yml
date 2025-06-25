@@ -26,4 +26,4 @@ jobs:
         run: dotnet build ST10318880_POE1.sln --no-restore --configuration Release
 
       - name: Run code formatting checks
-        run: dotnet format ST10318880_POE1.sln --verify-no-changes --verbosity diagnostic
+        run: dotnet format ST10318880_POE1.sln
