@@ -2,9 +2,7 @@
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "st10318880_poe1", "ST10318880_POE1\st10318880_poe1.csproj", "{A79D78CF-1B33-471B-A4D3-13E8EACDBC55}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatbotGUI", "ChatbotGUI\ChatbotGUI.csproj", "{3E263067-2211-41C0-88EC-B15920B64F03}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "st10318880_poe1", "st10318880_poe1.csproj", "{A79D78CF-1B33-471B-A4D3-13E8EACDBC55}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,10 +14,6 @@ Global
 		{A79D78CF-1B33-471B-A4D3-13E8EACDBC55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A79D78CF-1B33-471B-A4D3-13E8EACDBC55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A79D78CF-1B33-471B-A4D3-13E8EACDBC55}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3E263067-2211-41C0-88EC-B15920B64F03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3E263067-2211-41C0-88EC-B15920B64F03}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3E263067-2211-41C0-88EC-B15920B64F03}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3E263067-2211-41C0-88EC-B15920B64F03}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
