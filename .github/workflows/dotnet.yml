@@ -1,0 +1,29 @@
+name: .NET Build and Format
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Restore dependencies
+        run: dotnet restore ST10318880_POE1.sln
+
+      - name: Build full solution
+        run: dotnet build ST10318880_POE1.sln --no-restore --configuration Release
+
+      - name: Run code formatting checks
+        run: dotnet format ST10318880_POE1.sln --verify-no-changes --verbosity diagnostic
