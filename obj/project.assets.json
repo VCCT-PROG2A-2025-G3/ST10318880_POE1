@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     "net8.0": {
-      "System.Windows.Extensions/9.0.4": {
+      "System.Windows.Extensions/9.0.6": {
         "type": "package",
         "compile": {
           "lib/net8.0/System.Windows.Extensions.dll": {
@@ -24,10 +24,10 @@
     }
   },
   "libraries": {
-    "System.Windows.Extensions/9.0.4": {
-      "sha512": "LBfgiBxCpJWch0PI7h55FyzlCdSXxBZM2/B/H+v1SBkhux/Da8L3fIP+r7WFwNuTfKiClNfB0Ne3BL12xiCEGw==",
+    "System.Windows.Extensions/9.0.6": {
+      "sha512": "t0NLE1cAXUmO2aiwCjesf9TVwttjaHnkKpiFBTm/d10QnQD6aiGYmrWLhS0HBIo4utB/jPkgRF0SJVbgrgfZ/Q==",
       "type": "package",
-      "path": "system.windows.extensions/9.0.4",
+      "path": "system.windows.extensions/9.0.6",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -43,7 +43,7 @@
         "runtimes/win/lib/net8.0/System.Windows.Extensions.xml",
         "runtimes/win/lib/net9.0/System.Windows.Extensions.dll",
         "runtimes/win/lib/net9.0/System.Windows.Extensions.xml",
-        "system.windows.extensions.9.0.4.nupkg.sha512",
+        "system.windows.extensions.9.0.6.nupkg.sha512",
         "system.windows.extensions.nuspec",
         "useSharedDesignerContext.txt"
       ]
@@ -51,7 +51,7 @@
   },
   "projectFileDependencyGroups": {
     "net8.0": [
-      "System.Windows.Extensions >= 9.0.4"
+      "System.Windows.Extensions >= 9.0.6"
     ]
   },
   "packageFolders": {
@@ -98,7 +98,7 @@
         "dependencies": {
           "System.Windows.Extensions": {
             "target": "Package",
-            "version": "[9.0.4, )"
+            "version": "[9.0.6, )"
           }
         },
         "imports": [
@@ -117,7 +117,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.410/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.411/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
