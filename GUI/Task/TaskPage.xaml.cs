@@ -1,4 +1,3 @@
-using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -8,13 +7,15 @@ namespace ST10318880_POE1.GUI.Task
 {
     public partial class TaskPage : Page
     {
-        private ObservableCollection<CyberTask> tasks = new ObservableCollection<CyberTask>();
+        private ObservableCollection<CyberTask> tasks;
         private readonly LogService _logService;
 
         public TaskPage(LogService logService)
         {
             InitializeComponent();
+
             _logService = logService;
+            tasks = new ObservableCollection<CyberTask>(_logService.GetTasks());
             TaskListBox.ItemsSource = tasks;
         }
 
@@ -56,6 +57,10 @@ namespace ST10318880_POE1.GUI.Task
                 TimeFrame = string.IsNullOrEmpty(timeFrame) ? null : timeFrame,
             };
 
+            // Add to LogService tasks
+            _logService.AddTask(newTask);
+
+            // Add to local observable collection for UI update
             tasks.Add(newTask);
 
             _logService.AddActivity(

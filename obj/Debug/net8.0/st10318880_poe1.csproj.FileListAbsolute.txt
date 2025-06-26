@@ -1,6 +1,0 @@
-C:\Users\kenan\documents\code\PROG6211\ST10318880_POE1\obj\Debug\net8.0\st10318880_poe1.csproj.AssemblyReference.cache
-C:\Users\kenan\documents\code\PROG6211\ST10318880_POE1\obj\Debug\net8.0\st10318880_poe1.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\kenan\documents\code\PROG6211\ST10318880_POE1\obj\Debug\net8.0\st10318880_poe1.AssemblyInfoInputs.cache
-C:\Users\kenan\documents\code\PROG6211\ST10318880_POE1\obj\Debug\net8.0\st10318880_poe1.AssemblyInfo.cs
-C:\Users\kenan\documents\code\PROG6211\ST10318880_POE1\obj\Debug\net8.0\st10318880_poe1.csproj.CoreCompileInputs.cache
-C:\Users\kenan\documents\code\PROG6211\ST10318880_POE1\obj\Debug\net8.0\st10318880_poe1.sourcelink.json

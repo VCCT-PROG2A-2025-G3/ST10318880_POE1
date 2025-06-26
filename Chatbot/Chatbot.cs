@@ -1,3 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using ST10318880_POE1.GUI.Task;
+using ST10318880_POE1.Services;
+
 namespace ST10318880_POE1.Chatbot
 {
     public class Chatbot
@@ -10,6 +16,40 @@ namespace ST10318880_POE1.Chatbot
         public void SetUserName(string name)
         {
             userName = name;
+        }
+
+        public bool IsInTaskConversation()
+        {
+            return currentState != ConversationState.None;
+        }
+
+        private readonly List<string> addTaskKeywords = new List<string>
+        {
+            "add task",
+            "create task",
+            "new task",
+            "remind me",
+            "reminder",
+            "set reminder",
+        };
+
+        public enum Intent
+        {
+            AddTask,
+            Other,
+            Unknown,
+        }
+
+        public Intent DetectIntent(string input)
+        {
+            string lowerInput = input.ToLower();
+
+            if (addTaskKeywords.Any(keyword => lowerInput.Contains(keyword)))
+            {
+                return Intent.AddTask;
+            }
+
+            return Intent.Unknown;
         }
 
         public void SetFavouriteTopic(string topicInput)
@@ -268,6 +308,90 @@ namespace ST10318880_POE1.Chatbot
             };
 
             return GetRandomResponse(details, userName);
+        }
+
+        private enum ConversationState
+        {
+            None,
+            WaitingForTitle,
+            WaitingForDescription,
+            WaitingForReminderConfirmation,
+            WaitingForReminderDate,
+        }
+
+        public Chatbot(LogService logService)
+        {
+            _logService = logService;
+        }
+
+        private readonly LogService _logService;
+        private ConversationState currentState = ConversationState.None;
+        private CyberTask pendingTask = new CyberTask();
+
+        public string HandleInput(string input)
+        {
+            string lower = input.ToLower();
+
+            if (currentState == ConversationState.None)
+            {
+                if (DetectIntent(input) == Intent.AddTask)
+                {
+                    currentState = ConversationState.WaitingForTitle;
+                    return "Sure! What would you like the task title to be?";
+                }
+                // Handle other intents normally
+                return GenerateResponse(input, userName ?? "");
+            }
+            else if (currentState == ConversationState.WaitingForTitle)
+            {
+                pendingTask.Title = input;
+                currentState = ConversationState.WaitingForDescription;
+                return "Got it! Would you like to add a description?";
+            }
+            else if (currentState == ConversationState.WaitingForDescription)
+            {
+                pendingTask.Description = input;
+                currentState = ConversationState.WaitingForReminderConfirmation;
+                return "Thanks! Should I set a reminder for this task? (yes/no)";
+            }
+            else if (currentState == ConversationState.WaitingForReminderConfirmation)
+            {
+                if (lower.Contains("yes"))
+                {
+                    currentState = ConversationState.WaitingForReminderDate;
+                    return "Okay, please tell me the date and time for the reminder.";
+                }
+                else
+                {
+                    currentState = ConversationState.None;
+                    SaveTask(pendingTask);
+                    pendingTask = new CyberTask();
+                    return "Task added without a reminder!";
+                }
+            }
+            else if (currentState == ConversationState.WaitingForReminderDate)
+            {
+                if (DateTime.TryParse(input, out DateTime reminder))
+                {
+                    pendingTask.ReminderDate = reminder;
+                    currentState = ConversationState.None;
+                    SaveTask(pendingTask);
+                    pendingTask = new CyberTask();
+                    return $"Task added with reminder set for {reminder}.";
+                }
+                else
+                {
+                    return "Sorry, I couldn't understand that date/time. Please try again.";
+                }
+            }
+
+            return "I'm not sure how to help with that right now.";
+        }
+
+        private void SaveTask(CyberTask task)
+        {
+            _logService.AddTask(task);
+            _logService.AddActivity($"Task added via chatbot: {task.Title}");
         }
 
         private string DetectSentiment(string input)
