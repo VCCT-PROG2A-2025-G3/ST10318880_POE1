@@ -3,85 +3,156 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:local="clr-namespace:ST10318880_POE1.GUI.Task"
       Title="TaskPage">
+  <Page.Background>
+    <ImageBrush ImageSource="pack://application:,,,/Images/background2.jpg"
+                Stretch="UniformToFill"/>
+  </Page.Background>
 
   <Page.Resources>
     <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
   </Page.Resources>
 
   <Grid Margin="20">
-    <StackPanel Orientation="Vertical"
-                HorizontalAlignment="Center"
-                Width="400">
+    <!-- ScrollViewer wraps content to allow scrolling when needed -->
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled">
+      <Border Background="#CCFFFFFF"
+              CornerRadius="12"
+              Padding="30"
+              Width="750"
+              HorizontalAlignment="Center"
+              Effect="{DynamicResource DropShadowEffect}">
+        <StackPanel Orientation="Vertical">
 
-      <TextBlock Text="Add Cybersecurity Task"
-                 FontSize="20"
-                 FontWeight="Bold"
-                 Margin="0,0,0,10"/>
+          <!-- Header -->
+          <TextBlock Text="Add Cybersecurity Task"
+                     FontSize="24"
+                     FontWeight="Bold"
+                     Foreground="#222"
+                     Margin="0,0,0,20"/>
 
-      <TextBlock Text="Task Title"
-                 Margin="0,5,0,0"/>
-      <TextBox x:Name="TitleInput"
-               Margin="0,0,0,10"/>
+          <!-- Task Title -->
+          <TextBlock Text="Task Title"
+                     FontWeight="SemiBold"
+                     Foreground="#555"
+                     Margin="0,0,0,5"/>
+          <TextBox x:Name="TitleInput"
+                   Margin="0,0,0,15"
+                   Padding="8"
+                   FontSize="14"
+                   BorderBrush="#ccc"
+                   BorderThickness="1"
+                   Background="#fff"/>
 
-      <TextBlock Text="Task Description"
-                 Margin="0,5,0,0"/>
-      <TextBox x:Name="DescriptionInput"
-               Margin="0,0,0,10"
-               Height="100"
-               TextWrapping="Wrap"
-               AcceptsReturn="True"/>
+          <!-- Task Description -->
+          <TextBlock Text="Task Description"
+                     FontWeight="SemiBold"
+                     Foreground="#555"
+                     Margin="0,0,0,5"/>
+          <TextBox x:Name="DescriptionInput"
+                   Height="100"
+                   TextWrapping="Wrap"
+                   AcceptsReturn="True"
+                   Margin="0,0,0,15"
+                   Padding="8"
+                   FontSize="14"
+                   BorderBrush="#ccc"
+                   BorderThickness="1"
+                   Background="#fff"
+                   VerticalScrollBarVisibility="Auto"/>
 
-      <CheckBox x:Name="EnableReminderCheckbox"
-                Content="Set Reminder"
-                Margin="0,10,0,5"
-                Checked="EnableReminderCheckbox_Checked"
-                Unchecked="EnableReminderCheckbox_Unchecked"/>
+          <!-- Reminder Checkbox -->
+          <CheckBox x:Name="EnableReminderCheckbox"
+                    Content="Set Reminder"
+                    Margin="0,0,0,10"
+                    FontWeight="SemiBold"
+                    Foreground="#444"
+                    Checked="EnableReminderCheckbox_Checked"
+                    Unchecked="EnableReminderCheckbox_Unchecked"/>
 
-      <!-- Reminder options -->
-      <StackPanel x:Name="ReminderOptionsPanel"
-                  Visibility="Collapsed">
-        <TextBlock Text="Reminder Date:"/>
-        <DatePicker x:Name="ReminderDatePicker"
-                    Margin="0,5"/>
-        <TextBlock Text="Or Time Frame (e.g., 'in 2 days'):"/>
-        <TextBox x:Name="TimeFrameInput"
-                 Margin="0,5"/>
-      </StackPanel>
+          <!-- Reminder Options -->
+          <StackPanel x:Name="ReminderOptionsPanel"
+                      Visibility="Collapsed"
+                      Margin="10,0,0,15">
+            <TextBlock Text="Reminder Date:"
+                       Margin="0,0,0,3"
+                       FontWeight="SemiBold"
+                       Foreground="#666"/>
+            <DatePicker x:Name="ReminderDatePicker"
+                        Margin="0,0,0,10"
+                        Padding="5"/>
 
-      <Button Content="Add Task"
-              Width="100"
-              Margin="0,15"
-              Click="AddTask_Click"/>
+            <TextBlock Text="Or Time Frame (e.g., 'in 2 days'):"
+                       Margin="0,0,0,3"
+                       FontWeight="SemiBold"
+                       Foreground="#666"/>
+            <TextBox x:Name="TimeFrameInput"
+                     Padding="6"
+                     FontSize="14"
+                     BorderBrush="#ccc"
+                     BorderThickness="1"
+                     Background="#fff"/>
+          </StackPanel>
 
-      <TextBlock Text="All Tasks"
-                 FontWeight="Bold"
-                 FontSize="16"
-                 Margin="0,20,0,10"/>
+          <!-- Add Task Button -->
+          <Button Content="Add Task"
+                  Width="120"
+                  Height="38"
+                  Background="#1976d2"
+                  Foreground="White"
+                  FontWeight="Bold"
+                  BorderThickness="0"
+                  Margin="0,10,0,30"
+                  HorizontalAlignment="Left"
+                  Click="AddTask_Click"/>
 
-      <ListBox x:Name="TaskListBox"
-               SelectionChanged="TaskListBox_SelectionChanged"
-               Height="200">
-        <ListBox.ItemTemplate>
-          <DataTemplate>
-            <StackPanel Orientation="Horizontal">
-              <TextBlock Text="{Binding Title}"
-                         FontWeight="Bold"
-                         Margin="0,0,5,0"/>
+          <!-- Tasks List Label -->F
+          <TextBlock Text="All Tasks"
+                     FontWeight="Bold"
+                     FontSize="18"
+                     Foreground="#222"
+                     Margin="0,0,0,10"/>
 
-              <TextBlock Text="(Completed)"
-                         Foreground="Green"
-                         Visibility="{Binding IsCompleted, Converter={StaticResource BoolToVisibilityConverter}}"
-                         Margin="5,0,0,0"/>
+          <TextBlock Text="Select a task to view details, mark as complete, or delete."
+                     FontStyle="Italic"
+                     FontSize="12"
+                     Foreground="#666"
+                     Margin="0,0,0,10"/>
 
-              <TextBlock Text="(To Do)"
-                         Foreground="Red"
-                         Visibility="{Binding IsCompleted, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=invert}"
-                         Margin="5,0,0,0"/>
-                         
-            </StackPanel>
-          </DataTemplate>
-        </ListBox.ItemTemplate>
-      </ListBox>
-    </StackPanel>
+          <!-- Task List -->
+          <Border BorderBrush="#ddd"
+                  BorderThickness="1"
+                  CornerRadius="8"
+                  Background="#fafafa"
+                  Padding="10">
+            <ListBox x:Name="TaskListBox"
+                     SelectionChanged="TaskListBox_SelectionChanged"
+                     MaxHeight="300"
+                     ScrollViewer.VerticalScrollBarVisibility="Auto"
+                     Background="Transparent"
+                     BorderThickness="0">
+              <ListBox.ItemTemplate>
+                <DataTemplate>
+                  <StackPanel Orientation="Horizontal"
+                              Margin="4,2">
+                    <TextBlock Text="{Binding Title}"
+                               FontWeight="SemiBold"
+                               Foreground="#333"
+                               Margin="0,0,10,0"/>
+                    <TextBlock Text="(Completed)"
+                               Foreground="Green"
+                               Visibility="{Binding IsCompleted, Converter={StaticResource BoolToVisibilityConverter}}"
+                               Margin="0,0,10,0"/>
+                    <TextBlock Text="(To Do)"
+                               Foreground="Red"
+                               Visibility="{Binding IsCompleted, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=invert}"/>
+                  </StackPanel>
+                </DataTemplate>
+              </ListBox.ItemTemplate>
+            </ListBox>
+          </Border>
+        </StackPanel>
+      </Border>
+    </ScrollViewer>
   </Grid>
 </Page>

@@ -1,11 +1,85 @@
 <Page x:Class="ST10318880_POE1.GUI.Quiz.QuizPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      Title="ChatPage">
-    <Grid>
-        <TextBlock Text="Quiz Page"
-                FontSize="24"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"/>
-    </Grid>
+      Title="QuizPage">
+
+  <Page.Background>
+    <ImageBrush ImageSource="pack://application:,,,/Images/background2.jpg"
+                Stretch="UniformToFill"/>
+  </Page.Background>
+
+  <Grid>
+    <Border Background="#CCFFFFFF"
+            CornerRadius="20"
+            Padding="30"
+            Margin="40"
+            Effect="{DynamicResource DropShadowEffect}"
+            Width="750">
+      <StackPanel HorizontalAlignment="Center"
+                  VerticalAlignment="Center">
+
+        <!-- Question -->
+        <TextBlock x:Name="QuestionTextBlock"
+                   FontSize="22"
+                   FontWeight="SemiBold"
+                   Foreground="#333"
+                   TextWrapping="Wrap"
+                   TextAlignment="Center"
+                   Margin="0,0,0,30"/>
+
+        <!-- True/False Buttons -->
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Margin="0,10">
+          <Border CornerRadius="8"
+                  Background="#4CAF50"
+                  Margin="10,0">
+            <Button Content="True"
+                    Width="120"
+                    Height="45"
+                    Background="#4CAF50"
+                    Foreground="White"
+                    FontWeight="Bold"
+                    Click="TrueButton_Click"
+                    BorderThickness="0"/>
+          </Border>
+
+          <Border CornerRadius="8"
+                  Background="#F44336"
+                  Margin="10,0">
+            <Button Content="False"
+                    Width="120"
+                    Height="45"
+                    Background="#F44336"
+                    Foreground="White"
+                    FontWeight="Bold"
+                    Click="FalseButton_Click"
+                    BorderThickness="0"/>
+          </Border>
+        </StackPanel>
+
+
+        <!-- Feedback -->
+        <TextBlock x:Name="FeedbackTextBlock"
+                   FontSize="16"
+                   FontStyle="Italic"
+                   Margin="0,20"
+                   TextAlignment="Center"
+                   TextWrapping="Wrap"/>
+
+        <!-- Next Button -->
+        <Button x:Name="NextButton"
+                Content="Next"
+                Width="100"
+                Height="40"
+                Margin="0,20,0,0"
+                Background="#2196F3"
+                Foreground="White"
+                FontWeight="Bold"
+                Visibility="Collapsed"
+                Click="NextButton_Click"
+                BorderThickness="0"/>
+      </StackPanel>
+    </Border>
+  </Grid>
 </Page>

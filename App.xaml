@@ -4,6 +4,10 @@
              xmlns:local="clr-namespace:ChatbotGUI"
              StartupUri="GUI/MainWindow.xaml">
     <Application.Resources>
-
+        <DropShadowEffect x:Key="DropShadowEffect"
+                          Color="Gray"
+                          BlurRadius="15"
+                          Direction="270"
+                          ShadowDepth="5"/>
     </Application.Resources>
 </Application>

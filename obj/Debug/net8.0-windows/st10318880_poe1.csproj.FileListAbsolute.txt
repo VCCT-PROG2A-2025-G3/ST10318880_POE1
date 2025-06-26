@@ -22,6 +22,7 @@ C:\Users\kenan\documents\code\PROG6211\ST10318880_POE1\obj\Debug\net8.0-windows\
 C:\Users\kenan\documents\code\PROG6211\ST10318880_POE1\obj\Debug\net8.0-windows\GeneratedInternalTypeHelper.g.cs
 C:\Users\kenan\documents\code\PROG6211\ST10318880_POE1\obj\Debug\net8.0-windows\st10318880_poe1_MarkupCompile.cache
 C:\Users\kenan\documents\code\PROG6211\ST10318880_POE1\obj\Debug\net8.0-windows\st10318880_poe1_MarkupCompile.lref
+C:\Users\kenan\documents\code\PROG6211\ST10318880_POE1\obj\Debug\net8.0-windows\App.baml
 C:\Users\kenan\documents\code\PROG6211\ST10318880_POE1\obj\Debug\net8.0-windows\GUI\Task\TaskPage.baml
 C:\Users\kenan\documents\code\PROG6211\ST10318880_POE1\obj\Debug\net8.0-windows\st10318880_poe1.g.resources
 C:\Users\kenan\documents\code\PROG6211\ST10318880_POE1\obj\Debug\net8.0-windows\st10318880_poe1.GeneratedMSBuildEditorConfig.editorconfig

@@ -35,6 +35,7 @@ namespace ST10318880_POE1.GUI.Chat
         private void AppendMessage(string senderTag, string message)
         {
             ChatOutput.Text += $"{senderTag}: {message}\n\n";
+            ChatScrollViewer.ScrollToEnd();
         }
 
         private void UserInput_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
