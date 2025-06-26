@@ -106,7 +106,7 @@
                   HorizontalAlignment="Left"
                   Click="AddTask_Click"/>
 
-          <!-- Tasks List Label -->F
+          <!-- Tasks List Label -->
           <TextBlock Text="All Tasks"
                      FontWeight="Bold"
                      FontSize="18"

@@ -6,6 +6,7 @@ using ST10318880_POE1.GUI.Chat;
 using ST10318880_POE1.GUI.Log;
 using ST10318880_POE1.GUI.Quiz;
 using ST10318880_POE1.GUI.Task;
+using ST10318880_POE1.Services;
 
 namespace ST10318880_POE1
 {
@@ -14,13 +15,14 @@ namespace ST10318880_POE1
         private Chatbot.Chatbot _chatbot;
         private string _userName = "User";
 
+        private readonly LogService _logService = LogService.Instance;
+
         public MainWindow()
         {
             InitializeComponent();
 
             _chatbot = new Chatbot.Chatbot();
 
-            // Ask for user name
             string? name = Interaction.InputBox("What is your name?", "User Name", "User");
             if (!string.IsNullOrWhiteSpace(name))
             {
@@ -28,7 +30,6 @@ namespace ST10318880_POE1
                 _chatbot.SetUserName(name);
             }
 
-            // Ask for favourite topic
             string? topic = Interaction.InputBox(
                 "What's your favourite cybersecurity topic? (e.g. phishing, passwords, browsing)",
                 "Favourite Topic",
@@ -39,28 +40,28 @@ namespace ST10318880_POE1
                 _chatbot.SetFavouriteTopic(topic);
             }
 
-            // Load default page
-            MainFrame.Content = new ChatPage(_chatbot, _userName);
+            // Pass LogService instance here as well
+            MainFrame.Content = new ChatPage(_chatbot, _userName, _logService);
         }
 
         private void ChatButton_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Content = new ChatPage(_chatbot, _userName);
+            MainFrame.Content = new ChatPage(_chatbot, _userName, _logService);
         }
 
         private void TaskButton_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Content = new TaskPage();
+            MainFrame.Content = new TaskPage(_logService);
         }
 
         private void QuizButton_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Content = new QuizPage();
+            MainFrame.Content = new QuizPage(_logService);
         }
 
         private void LogButton_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Content = new LogPage();
+            MainFrame.Content = new LogPage(_logService);
         }
     }
 }

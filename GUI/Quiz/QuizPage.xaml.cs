@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using ST10318880_POE1.Services;
 
 namespace ST10318880_POE1.GUI.Quiz
 {
@@ -10,9 +11,12 @@ namespace ST10318880_POE1.GUI.Quiz
         private int currentIndex = 0;
         private int score = 0;
 
-        public QuizPage()
+        private readonly LogService _logService;
+
+        public QuizPage(LogService logService)
         {
             InitializeComponent();
+            _logService = logService;
             LoadQuestions();
             DisplayCurrentQuestion();
         }
@@ -127,6 +131,11 @@ namespace ST10318880_POE1.GUI.Quiz
                 FeedbackTextBlock.Text = "❌ Incorrect. " + question.Explanation;
                 FeedbackTextBlock.Foreground = System.Windows.Media.Brushes.Red;
             }
+
+            // Log the quiz attempt
+            LogService.Instance.AddActivity(
+                $"Quiz attempt - Q: '{question.QuestionText}' | Answer: {(userAnswer ? "True" : "False")} | Correct: {isCorrect}"
+            );
 
             NextButton.Visibility = Visibility.Visible;
         }

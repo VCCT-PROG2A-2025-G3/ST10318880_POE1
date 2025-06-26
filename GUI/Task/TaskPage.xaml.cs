@@ -2,16 +2,19 @@ using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using ST10318880_POE1.Services;
 
 namespace ST10318880_POE1.GUI.Task
 {
     public partial class TaskPage : Page
     {
         private ObservableCollection<CyberTask> tasks = new ObservableCollection<CyberTask>();
+        private readonly LogService _logService;
 
-        public TaskPage()
+        public TaskPage(LogService logService)
         {
             InitializeComponent();
+            _logService = logService;
             TaskListBox.ItemsSource = tasks;
         }
 
@@ -54,6 +57,10 @@ namespace ST10318880_POE1.GUI.Task
             };
 
             tasks.Add(newTask);
+
+            _logService.AddActivity(
+                $"Task created - Title: '{title}' Description: '{description}'"
+            );
 
             MessageBox.Show(
                 "Task added successfully!",
