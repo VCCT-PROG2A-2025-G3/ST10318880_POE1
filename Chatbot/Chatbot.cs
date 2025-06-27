@@ -201,7 +201,10 @@ namespace ST10318880_POE1.Chatbot
             }
             else if (lower.Contains("what can i ask"))
             {
-                return "You can ask me about password safety, phishing, or safe browsing.";
+                return "Here’s what you can do:\n"
+                    + "• Ask about cybersecurity topics like passwords, phishing, or safe browsing.\n"
+                    + "• Add a task by saying things like 'remind me to...' or 'add a task'.\n"
+                    + "• Take a quiz by saying 'start quiz' or 'test me'.";
             }
             else if (lower.Contains("password"))
             {
