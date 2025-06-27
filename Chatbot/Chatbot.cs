@@ -432,7 +432,7 @@ namespace ST10318880_POE1.Chatbot
             TakingQuiz,
         }
 
-        // Secondary helper method to log actyivities held in chatbot as opposed to dedicated UI
+        // Secondary helper method to log activities held in chatbot as opposed to dedicated UI
         public Chatbot(LogService logService)
         {
             _logService = logService;

@@ -26,6 +26,7 @@ namespace ST10318880_POE1.GUI.Task
             TaskDescriptionText.Text = $"Description: {task.Description}";
             ReminderTextBlock.Text = $"Reminder: {task.ReminderDisplay}";
         }
+
         private void Completed_Click(object sender, RoutedEventArgs e)
         {
             Result = TaskAction.Completed;

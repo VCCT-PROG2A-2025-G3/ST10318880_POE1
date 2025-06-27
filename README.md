@@ -1,7 +1,7 @@
 # 🛡️ Cybersecurity Awareness Chatbot
 
 A modern WPF-based chatbot application built in C# to raise awareness about cybersecurity.  
-▶️ **[Watch the demo video](https://www.youtube.com/watch?v=YOUR_VIDEO_ID)**  
+▶️ **[Watch the demo video](https://youtu.be/jL3I559bB64)**  
 
 ---
 
