@@ -1,7 +1,5 @@
 using System.Windows;
 using System.Windows.Controls;
-using ST10318880_POE1.Chatbot;
-using ST10318880_POE1.GUI.Task; // For CyberTask
 using ST10318880_POE1.Services;
 
 namespace ST10318880_POE1.GUI.Chat

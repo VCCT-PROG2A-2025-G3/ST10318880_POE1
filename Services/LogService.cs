@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using ST10318880_POE1.GUI.Task;
 
 namespace ST10318880_POE1.Services

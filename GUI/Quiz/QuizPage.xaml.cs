@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using ST10318880_POE1.Services;
@@ -7,10 +6,9 @@ namespace ST10318880_POE1.GUI.Quiz
 {
     public partial class QuizPage : Page
     {
-        private List<QuizQuestion> questions;
+        private List<QuizQuestion> questions = new();
         private int currentIndex = 0;
         private int score = 0;
-
         private readonly LogService _logService;
 
         public QuizPage(LogService logService)

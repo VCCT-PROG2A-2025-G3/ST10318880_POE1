@@ -1,17 +1,17 @@
-using System.Collections.Generic;
 using ST10318880_POE1.GUI.Quiz;
 
 namespace ST10318880_POE1.Services.ChatQuiz
 {
     public class ChatQuizService
     {
-        private List<QuizQuestion> questions;
+        private List<QuizQuestion> questions = new();
         private int currentIndex;
         private int score;
         private readonly LogService _logService;
 
         public ChatQuizService(LogService logService)
         {
+            _logService = logService;
             LoadQuestions();
             currentIndex = 0;
             score = 0;
@@ -42,7 +42,7 @@ namespace ST10318880_POE1.Services.ChatQuiz
             };
         }
 
-        public string GetCurrentQuestion()
+        public string? GetCurrentQuestion()
         {
             if (currentIndex < questions.Count)
                 return questions[currentIndex].QuestionText;

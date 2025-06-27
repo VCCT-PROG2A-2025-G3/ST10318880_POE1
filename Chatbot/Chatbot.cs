@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 using ST10318880_POE1.GUI.Task;
 using ST10318880_POE1.Services;
@@ -237,6 +234,17 @@ namespace ST10318880_POE1.Chatbot
                     userName
                 );
             }
+            else if (
+                lower.Contains("favourite topic")
+                || lower.Contains("favorite topic")
+                || lower.Contains("my topic")
+            )
+            {
+                if (string.IsNullOrEmpty(favouriteTopic) || favouriteTopic == "unknown")
+                    return "Hmm, I'm not sure yet — I haven't picked up on your favorite topic.";
+
+                return $"I'd say your favorite topic so far is **{favouriteTopic}**!";
+            }
 
             // Fallback if no known topic
             return "I'm not sure how to answer that yet. Try asking about cybersecurity topics!";
@@ -421,7 +429,7 @@ namespace ST10318880_POE1.Chatbot
 
         private readonly LogService _logService;
         private ConversationState currentState = ConversationState.None;
-        private ChatQuizService chatQuizService;
+        private ChatQuizService? chatQuizService;
         private CyberTask pendingTask = new CyberTask();
 
         public string HandleInput(string input)
@@ -431,7 +439,7 @@ namespace ST10318880_POE1.Chatbot
             // Handle quiz answer input if we're in quiz mode
             if (currentState == ConversationState.TakingQuiz)
             {
-                string response = chatQuizService.SubmitAnswer(input);
+                string response = chatQuizService!.SubmitAnswer(input);
 
                 if (chatQuizService.IsComplete)
                 {

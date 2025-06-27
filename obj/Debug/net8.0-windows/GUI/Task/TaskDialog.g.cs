@@ -75,7 +75,7 @@ namespace ST10318880_POE1.GUI.Task {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/st10318880_poe1;V1.0.0.0;component/gui/task/taskdialog.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/st10318880_poe1;component/gui/task/taskdialog.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\GUI\Task\TaskDialog.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

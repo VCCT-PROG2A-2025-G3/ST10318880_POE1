@@ -99,8 +99,8 @@ namespace ST10318880_POE1.GUI.Task
 
     public class CyberTask
     {
-        public string Title { get; set; }
-        public string Description { get; set; }
+        public string? Title { get; set; }
+        public string? Description { get; set; }
         public DateTime? ReminderDate { get; set; }
         public string? TimeFrame { get; set; }
         public bool IsCompleted { get; set; } = false;
