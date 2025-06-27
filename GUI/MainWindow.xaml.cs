@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Media;
+using System.Windows;
 using Microsoft.VisualBasic;
 using ST10318880_POE1.GUI.Chat;
 using ST10318880_POE1.GUI.Log;
@@ -39,8 +40,30 @@ namespace ST10318880_POE1
                 _chatbot.SetFavouriteTopic(topic);
             }
 
-            // Load default view into the frame (Chat view)
+            // Load the chat page first
             MainFrame.Content = new ChatPage(_chatbot, _userName, _logService);
+
+            // Once UI is fully loaded, play greeting
+            Loaded += MainWindow_Loaded;
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Path to greeting.wav in the root directory
+                string wavPath = System.IO.Path.Combine(
+                    AppDomain.CurrentDomain.BaseDirectory,
+                    "greeting.wav"
+                );
+
+                SoundPlayer player = new(wavPath);
+                player.Play();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error playing greeting: " + ex.Message);
+            }
         }
 
         // Load Chat page when Chat button is clicked
