@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "c+SyfRingx4=",
+  "dgSpecHash": "8z2gn3PWIU0=",
   "success": true,
-  "projectFilePath": "C:\\Users\\kenan\\Documents\\Code\\PROG6211\\ST10318880_POE1\\st10318880_poe1.csproj",
+  "projectFilePath": "C:\\Users\\kenan\\documents\\code\\PROG6211\\ST10318880_POE1\\st10318880_poe1.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\kenan\\.nuget\\packages\\system.windows.extensions\\9.0.6\\system.windows.extensions.9.0.6.nupkg.sha512"
   ],

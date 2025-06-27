@@ -47,7 +47,7 @@ namespace ST10318880_POE1.GUI.Chat
             ChatScrollViewer.ScrollToEnd(); // Auto-scroll to latest message
         }
 
-        // Allows Enter key to send message (keyboard shortcut)
+        // Allows Enter key to send message
         private void UserInput_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == System.Windows.Input.Key.Enter)

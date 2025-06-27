@@ -6,14 +6,11 @@ namespace ST10318880_POE1.GUI.Quiz
 {
     public partial class QuizPage : Page
     {
-        // List of quiz questions
         private List<QuizQuestion> questions = new();
 
         // Current question index and score tracker
         private int currentIndex = 0;
         private int score = 0;
-
-        // Shared log service for recording quiz activity
         private readonly LogService _logService;
 
         // Constructor initializes quiz state and loads first question

@@ -17,137 +17,6 @@ namespace ST10318880_POE1.Chatbot
             userName = name;
         }
 
-        public bool IsInTaskConversation()
-        {
-            return currentState != ConversationState.None;
-        }
-
-        // Common phrases for adding tasks/reminders
-        private readonly List<string> addTaskKeywords = new List<string>
-        {
-            "add task",
-            "create task",
-            "new task",
-            "remind me",
-            "reminder",
-            "set reminder",
-            "schedule task",
-            "task reminder",
-            "add a new task",
-            "set a task",
-            "i want to add a task",
-            "can you add a task",
-            "make a task",
-            "remember this",
-            "remember to",
-            "log a task",
-            "save a task",
-            "write this down",
-            "note this down",
-            "help me remember",
-            "i need to do something",
-            "don’t forget to",
-            "can you note",
-            "todo",
-            "add to my list",
-            "task list",
-            "remind",
-            "add something",
-            "track this",
-        };
-
-        // Phrases to initiate the quiz
-        private readonly List<string> startQuizKeywords = new List<string>
-        {
-            "start quiz",
-            "take quiz",
-            "quiz time",
-            "begin quiz",
-            "i want to do a quiz",
-            "can i take a quiz",
-            "run the quiz",
-            "give me a quiz",
-            "test me",
-            "start the test",
-            "begin test",
-            "i want a test",
-            "start cyber quiz",
-            "cybersecurity quiz",
-            "ask me questions",
-            "let’s start the quiz",
-            "start knowledge check",
-            "launch the quiz",
-            "quiz me",
-            "start a quick test",
-            "cyber test",
-            "challenge me",
-            "quiz now",
-            "let’s quiz",
-            "start challenge",
-            "knowledge check",
-            "ask a question",
-            "ask quiz question",
-        };
-
-        // Regex patterns to match flexible user inputs
-        private readonly Regex addTaskRegex = new Regex(
-            @"\b(add|create|make|note|remember|remind|log|save|write|track|schedule|set)\b.*\b(task|reminder|something|this|todo|list)?\b",
-            RegexOptions.IgnoreCase
-        );
-
-        private readonly Regex startQuizRegex = new Regex(
-            @"\b(start|take|run|launch|begin|give|do|want|quiz|test|challenge|ask)\b.*\b(quiz|test|questions?)\b|\bquiz\b",
-            RegexOptions.IgnoreCase
-        );
-
-        // Enum for chatbot intent detection
-        public enum Intent
-        {
-            AddTask,
-            StartQuiz,
-            Other,
-            Unknown,
-        }
-
-        // Detect user's intent based on regex or keyword lists
-        public Intent DetectIntent(string input)
-        {
-            string cleanedInput = new string(
-                input.ToLower().Where(c => !char.IsPunctuation(c)).ToArray()
-            );
-
-            Console.WriteLine($"[DEBUG] DetectIntent cleaned input: {cleanedInput}");
-
-            // Regex-based matching first
-            if (addTaskRegex.IsMatch(cleanedInput))
-            {
-                Console.WriteLine("[DEBUG] Detected intent (regex): AddTask");
-                return Intent.AddTask;
-            }
-
-            if (startQuizRegex.IsMatch(cleanedInput))
-            {
-                Console.WriteLine("[DEBUG] Detected intent (regex): StartQuiz");
-                return Intent.StartQuiz;
-            }
-
-            // Fallback to keyword list matching
-            if (addTaskKeywords.Any(keyword => cleanedInput.Contains(keyword)))
-            {
-                Console.WriteLine("[DEBUG] Detected intent (keywords): AddTask");
-                return Intent.AddTask;
-            }
-
-            if (startQuizKeywords.Any(keyword => cleanedInput.Contains(keyword)))
-            {
-                Console.WriteLine("[DEBUG] Detected intent (keywords): StartQuiz");
-                return Intent.StartQuiz;
-            }
-
-            Console.WriteLine("[DEBUG] Detected intent: Other");
-            return Intent.Other;
-        }
-
         public void SetFavouriteTopic(string topicInput)
         {
             topicInput = topicInput.ToLower().Trim();
@@ -418,6 +287,139 @@ namespace ST10318880_POE1.Chatbot
             };
 
             return GetRandomResponse(details, userName);
+        }
+
+        // ----------------------- Bot support for tasks and quizes starts here (Part 3) -----------------------
+
+        public bool IsInTaskConversation()
+        {
+            return currentState != ConversationState.None;
+        }
+
+        // Common phrases for adding tasks/reminders
+        private readonly List<string> addTaskKeywords = new List<string>
+        {
+            "add task",
+            "create task",
+            "new task",
+            "remind me",
+            "reminder",
+            "set reminder",
+            "schedule task",
+            "task reminder",
+            "add a new task",
+            "set a task",
+            "i want to add a task",
+            "can you add a task",
+            "make a task",
+            "remember this",
+            "remember to",
+            "log a task",
+            "save a task",
+            "write this down",
+            "note this down",
+            "help me remember",
+            "i need to do something",
+            "don’t forget to",
+            "can you note",
+            "todo",
+            "add to my list",
+            "task list",
+            "remind",
+            "add something",
+            "track this",
+        };
+
+        // Phrases to initiate the quiz
+        private readonly List<string> startQuizKeywords = new List<string>
+        {
+            "start quiz",
+            "take quiz",
+            "quiz time",
+            "begin quiz",
+            "i want to do a quiz",
+            "can i take a quiz",
+            "run the quiz",
+            "give me a quiz",
+            "test me",
+            "start the test",
+            "begin test",
+            "i want a test",
+            "start cyber quiz",
+            "cybersecurity quiz",
+            "ask me questions",
+            "let’s start the quiz",
+            "start knowledge check",
+            "launch the quiz",
+            "quiz me",
+            "start a quick test",
+            "cyber test",
+            "challenge me",
+            "quiz now",
+            "let’s quiz",
+            "start challenge",
+            "knowledge check",
+            "ask a question",
+            "ask quiz question",
+        };
+
+        // Regex patterns to match flexible user inputs
+        private readonly Regex addTaskRegex = new Regex(
+            @"\b(add|create|make|note|remember|remind|log|save|write|track|schedule|set)\b.*\b(task|reminder|something|this|todo|list)?\b",
+            RegexOptions.IgnoreCase
+        );
+
+        private readonly Regex startQuizRegex = new Regex(
+            @"\b(start|take|run|launch|begin|give|do|want|quiz|test|challenge|ask)\b.*\b(quiz|test|questions?)\b|\bquiz\b",
+            RegexOptions.IgnoreCase
+        );
+
+        // Enum for chatbot intent detection
+        public enum Intent
+        {
+            AddTask,
+            StartQuiz,
+            Other,
+            Unknown,
+        }
+
+        // Detect user's intent based on regex or keyword lists
+        public Intent DetectIntent(string input)
+        {
+            string cleanedInput = new string(
+                input.ToLower().Where(c => !char.IsPunctuation(c)).ToArray()
+            );
+
+            Console.WriteLine($"[DEBUG] DetectIntent cleaned input: {cleanedInput}");
+
+            // Regex-based matching first
+            if (addTaskRegex.IsMatch(cleanedInput))
+            {
+                Console.WriteLine("[DEBUG] Detected intent (regex): AddTask");
+                return Intent.AddTask;
+            }
+
+            if (startQuizRegex.IsMatch(cleanedInput))
+            {
+                Console.WriteLine("[DEBUG] Detected intent (regex): StartQuiz");
+                return Intent.StartQuiz;
+            }
+
+            // Fallback to keyword list matching
+            if (addTaskKeywords.Any(keyword => cleanedInput.Contains(keyword)))
+            {
+                Console.WriteLine("[DEBUG] Detected intent (keywords): AddTask");
+                return Intent.AddTask;
+            }
+
+            if (startQuizKeywords.Any(keyword => cleanedInput.Contains(keyword)))
+            {
+                Console.WriteLine("[DEBUG] Detected intent (keywords): StartQuiz");
+                return Intent.StartQuiz;
+            }
+
+            Console.WriteLine("[DEBUG] Detected intent: Other");
+            return Intent.Other;
         }
 
         private enum ConversationState
