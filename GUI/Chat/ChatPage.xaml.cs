@@ -35,25 +35,7 @@ namespace ST10318880_POE1.GUI.Chat
 
             string botReply;
 
-            if (_chatbot.IsInTaskConversation())
-            {
-                // Pass input to chatbot's conversation handler
-                botReply = _chatbot.HandleInput(userMessage);
-            }
-            else
-            {
-                var intent = _chatbot.DetectIntent(userMessage);
-
-                if (intent == ST10318880_POE1.Chatbot.Chatbot.Intent.AddTask)
-                {
-                    // Start multi-step task conversation
-                    botReply = _chatbot.HandleInput(userMessage);
-                }
-                else
-                {
-                    botReply = _chatbot.GetResponse(userMessage, _userName);
-                }
-            }
+            botReply = _chatbot.HandleInput(userMessage);
 
             AppendMessage("🤖", botReply);
             _logService.AddChatMessage($"Bot: {botReply}");

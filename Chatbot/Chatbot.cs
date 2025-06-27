@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using ST10318880_POE1.GUI.Task;
 using ST10318880_POE1.Services;
+using ST10318880_POE1.Services.ChatQuiz;
 
 namespace ST10318880_POE1.Chatbot
 {
@@ -31,25 +33,117 @@ namespace ST10318880_POE1.Chatbot
             "remind me",
             "reminder",
             "set reminder",
+            "schedule task",
+            "task reminder",
+            "add a new task",
+            "set a task",
+            "i want to add a task",
+            "can you add a task",
+            "make a task",
+            "remember this",
+            "remember to",
+            "log a task",
+            "save a task",
+            "write this down",
+            "note this down",
+            "help me remember",
+            "i need to do something",
+            "don’t forget to",
+            "can you note",
+            "todo",
+            "add to my list",
+            "task list",
+            "remind",
+            "add something",
+            "track this",
         };
+
+        private readonly List<string> startQuizKeywords = new List<string>
+        {
+            "start quiz",
+            "take quiz",
+            "quiz time",
+            "begin quiz",
+            "i want to do a quiz",
+            "can i take a quiz",
+            "run the quiz",
+            "give me a quiz",
+            "test me",
+            "start the test",
+            "begin test",
+            "i want a test",
+            "start cyber quiz",
+            "cybersecurity quiz",
+            "ask me questions",
+            "let’s start the quiz",
+            "start knowledge check",
+            "launch the quiz",
+            "quiz me",
+            "start a quick test",
+            "cyber test",
+            "challenge me",
+            "quiz now",
+            "let’s quiz",
+            "start challenge",
+            "knowledge check",
+            "ask a question",
+            "ask quiz question",
+        };
+
+        private readonly Regex addTaskRegex = new Regex(
+            @"\b(add|create|make|note|remember|remind|log|save|write|track|schedule|set)\b.*\b(task|reminder|something|this|todo|list)?\b",
+            RegexOptions.IgnoreCase
+        );
+
+        private readonly Regex startQuizRegex = new Regex(
+            @"\b(start|take|run|launch|begin|give|do|want|quiz|test|challenge|ask)\b.*\b(quiz|test|questions?)\b|\bquiz\b",
+            RegexOptions.IgnoreCase
+        );
 
         public enum Intent
         {
             AddTask,
+            StartQuiz,
             Other,
             Unknown,
         }
 
         public Intent DetectIntent(string input)
         {
-            string lowerInput = input.ToLower();
+            string cleanedInput = new string(
+                input.ToLower().Where(c => !char.IsPunctuation(c)).ToArray()
+            );
 
-            if (addTaskKeywords.Any(keyword => lowerInput.Contains(keyword)))
+            Console.WriteLine($"[DEBUG] DetectIntent cleaned input: {cleanedInput}");
+
+            // Regex-based matching first
+            if (addTaskRegex.IsMatch(cleanedInput))
             {
+                Console.WriteLine("[DEBUG] Detected intent (regex): AddTask");
                 return Intent.AddTask;
             }
 
-            return Intent.Unknown;
+            if (startQuizRegex.IsMatch(cleanedInput))
+            {
+                Console.WriteLine("[DEBUG] Detected intent (regex): StartQuiz");
+                return Intent.StartQuiz;
+            }
+
+            // Fallback to keyword list matching
+            if (addTaskKeywords.Any(keyword => cleanedInput.Contains(keyword)))
+            {
+                Console.WriteLine("[DEBUG] Detected intent (keywords): AddTask");
+                return Intent.AddTask;
+            }
+
+            if (startQuizKeywords.Any(keyword => cleanedInput.Contains(keyword)))
+            {
+                Console.WriteLine("[DEBUG] Detected intent (keywords): StartQuiz");
+                return Intent.StartQuiz;
+            }
+
+            Console.WriteLine("[DEBUG] Detected intent: Other");
+            return Intent.Other;
         }
 
         public void SetFavouriteTopic(string topicInput)
@@ -317,6 +411,7 @@ namespace ST10318880_POE1.Chatbot
             WaitingForDescription,
             WaitingForReminderConfirmation,
             WaitingForReminderDate,
+            TakingQuiz,
         }
 
         public Chatbot(LogService logService)
@@ -326,30 +421,61 @@ namespace ST10318880_POE1.Chatbot
 
         private readonly LogService _logService;
         private ConversationState currentState = ConversationState.None;
+        private ChatQuizService chatQuizService;
         private CyberTask pendingTask = new CyberTask();
 
         public string HandleInput(string input)
         {
             string lower = input.ToLower();
 
+            // Handle quiz answer input if we're in quiz mode
+            if (currentState == ConversationState.TakingQuiz)
+            {
+                string response = chatQuizService.SubmitAnswer(input);
+
+                if (chatQuizService.IsComplete)
+                {
+                    currentState = ConversationState.None;
+                }
+
+                return response;
+            }
+
+            // Starting point for new conversation or intent
             if (currentState == ConversationState.None)
             {
-                if (DetectIntent(input) == Intent.AddTask)
+                var intent = DetectIntent(input);
+
+                if (intent == Intent.AddTask)
                 {
                     currentState = ConversationState.WaitingForTitle;
                     return "Sure! What would you like the task title to be?";
                 }
-                // Handle other intents normally
+
+                if (intent == Intent.StartQuiz)
+                {
+                    chatQuizService = new ChatQuizService(_logService);
+                    currentState = ConversationState.TakingQuiz;
+                    return $"🧠 Let's start the quiz!\n\n❓ {chatQuizService.GetCurrentQuestion()} (True/False)";
+                }
+
+                // Default to general response
                 return GenerateResponse(input, userName ?? "");
             }
+            // Handle task conversation flow
             else if (currentState == ConversationState.WaitingForTitle)
             {
                 pendingTask.Title = input;
                 currentState = ConversationState.WaitingForDescription;
-                return "Got it! Would you like to add a description?";
+                return "Got it! Add a description.";
             }
             else if (currentState == ConversationState.WaitingForDescription)
             {
+                if (string.IsNullOrWhiteSpace(input) || input.ToLower().Trim() == "no")
+                {
+                    return "A description is required. Please provide one.";
+                }
+
                 pendingTask.Description = input;
                 currentState = ConversationState.WaitingForReminderConfirmation;
                 return "Thanks! Should I set a reminder for this task? (yes/no)";
