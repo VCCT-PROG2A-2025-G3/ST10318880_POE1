@@ -6,11 +6,17 @@ namespace ST10318880_POE1.GUI.Quiz
 {
     public partial class QuizPage : Page
     {
+        // List of quiz questions
         private List<QuizQuestion> questions = new();
+
+        // Current question index and score tracker
         private int currentIndex = 0;
         private int score = 0;
+
+        // Shared log service for recording quiz activity
         private readonly LogService _logService;
 
+        // Constructor initializes quiz state and loads first question
         public QuizPage(LogService logService)
         {
             InitializeComponent();
@@ -19,6 +25,7 @@ namespace ST10318880_POE1.GUI.Quiz
             DisplayCurrentQuestion();
         }
 
+        // Populates the list with cybersecurity quiz questions
         private void LoadQuestions()
         {
             questions = new List<QuizQuestion>
@@ -35,7 +42,7 @@ namespace ST10318880_POE1.GUI.Quiz
                     Answer = false,
                     Explanation = "HTTPS encrypts traffic, HTTP does not.",
                 },
-                // Add 8 more...
+                // More sample questions:
                 new QuizQuestion
                 {
                     QuestionText = "Two-factor authentication increases security.",
@@ -88,6 +95,7 @@ namespace ST10318880_POE1.GUI.Quiz
             };
         }
 
+        // Displays the current quiz question or final score if quiz is complete
         private void DisplayCurrentQuestion()
         {
             FeedbackTextBlock.Text = "";
@@ -95,10 +103,12 @@ namespace ST10318880_POE1.GUI.Quiz
 
             if (currentIndex < questions.Count)
             {
+                // Show current question
                 QuestionTextBlock.Text = questions[currentIndex].QuestionText;
             }
             else
             {
+                // Quiz complete – show score and evaluation
                 QuestionTextBlock.Text = $"Quiz complete! Your score: {score}/{questions.Count}";
                 FeedbackTextBlock.Text = score switch
                 {
@@ -110,6 +120,7 @@ namespace ST10318880_POE1.GUI.Quiz
             }
         }
 
+        // Handles user answer (true or false), gives feedback and logs attempt
         private void HandleAnswer(bool userAnswer)
         {
             if (currentIndex >= questions.Count)
@@ -118,6 +129,7 @@ namespace ST10318880_POE1.GUI.Quiz
             var question = questions[currentIndex];
             bool isCorrect = userAnswer == question.Answer;
 
+            // Provide visual feedback
             if (isCorrect)
             {
                 score++;
@@ -130,7 +142,7 @@ namespace ST10318880_POE1.GUI.Quiz
                 FeedbackTextBlock.Foreground = System.Windows.Media.Brushes.Red;
             }
 
-            // Log the quiz attempt
+            // Log this quiz attempt with details
             LogService.Instance.AddActivity(
                 $"Quiz attempt - Q: '{question.QuestionText}' | Answer: {(userAnswer ? "True" : "False")} | Correct: {isCorrect}"
             );
@@ -138,10 +150,13 @@ namespace ST10318880_POE1.GUI.Quiz
             NextButton.Visibility = Visibility.Visible;
         }
 
+        // Event handler: user selects "True"
         private void TrueButton_Click(object sender, RoutedEventArgs e) => HandleAnswer(true);
 
+        // Event handler: user selects "False"
         private void FalseButton_Click(object sender, RoutedEventArgs e) => HandleAnswer(false);
 
+        // Advances to the next question when "Next" is clicked
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
             currentIndex++;

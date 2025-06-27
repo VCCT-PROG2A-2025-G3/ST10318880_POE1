@@ -17,6 +17,7 @@ namespace ST10318880_POE1.Services.ChatQuiz
             score = 0;
         }
 
+        // Initialize a static list of quiz questions
         private void LoadQuestions()
         {
             questions = new List<QuizQuestion>
@@ -42,6 +43,7 @@ namespace ST10318880_POE1.Services.ChatQuiz
             };
         }
 
+        // Returns the current question's text
         public string? GetCurrentQuestion()
         {
             if (currentIndex < questions.Count)
@@ -49,8 +51,10 @@ namespace ST10318880_POE1.Services.ChatQuiz
             return null;
         }
 
+        // Indicates if there are more questions left
         public bool HasMoreQuestions => currentIndex < questions.Count;
 
+        // Handles submitted answer and returns feedback
         public string SubmitAnswer(string userInput)
         {
             string cleaned = userInput.Trim().ToLower();
@@ -59,9 +63,7 @@ namespace ST10318880_POE1.Services.ChatQuiz
             if (!HasMoreQuestions)
                 return "Quiz is already complete.";
 
-            // if (!bool.TryParse(userInput.ToLower(), out bool userAnswer))
-            //     return " Please answer with '(T)rue' or '(F)alse'.";
-
+            // Accepts both full and shorthand answers
             if (cleaned == "true" || cleaned == "t")
                 userAnswer = true;
             else if (cleaned == "false" || cleaned == "f")
@@ -75,6 +77,7 @@ namespace ST10318880_POE1.Services.ChatQuiz
             if (isCorrect)
                 score++;
 
+            // Create feedback with icon and explanation
             string feedback =
                 (isCorrect ? "✅ Correct!" : "❌ Incorrect.") + $"\nℹ️ Explanation: {q.Explanation}";
 
@@ -92,6 +95,7 @@ namespace ST10318880_POE1.Services.ChatQuiz
             return feedback;
         }
 
+        // Returns true when the quiz is over
         public bool IsComplete => !HasMoreQuestions;
     }
 }

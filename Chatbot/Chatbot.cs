@@ -22,6 +22,7 @@ namespace ST10318880_POE1.Chatbot
             return currentState != ConversationState.None;
         }
 
+        // Common phrases for adding tasks/reminders
         private readonly List<string> addTaskKeywords = new List<string>
         {
             "add task",
@@ -55,6 +56,7 @@ namespace ST10318880_POE1.Chatbot
             "track this",
         };
 
+        // Phrases to initiate the quiz
         private readonly List<string> startQuizKeywords = new List<string>
         {
             "start quiz",
@@ -87,6 +89,7 @@ namespace ST10318880_POE1.Chatbot
             "ask quiz question",
         };
 
+        // Regex patterns to match flexible user inputs
         private readonly Regex addTaskRegex = new Regex(
             @"\b(add|create|make|note|remember|remind|log|save|write|track|schedule|set)\b.*\b(task|reminder|something|this|todo|list)?\b",
             RegexOptions.IgnoreCase
@@ -97,6 +100,7 @@ namespace ST10318880_POE1.Chatbot
             RegexOptions.IgnoreCase
         );
 
+        // Enum for chatbot intent detection
         public enum Intent
         {
             AddTask,
@@ -105,6 +109,7 @@ namespace ST10318880_POE1.Chatbot
             Unknown,
         }
 
+        // Detect user's intent based on regex or keyword lists
         public Intent DetectIntent(string input)
         {
             string cleanedInput = new string(
@@ -422,6 +427,7 @@ namespace ST10318880_POE1.Chatbot
             TakingQuiz,
         }
 
+        // Secondary helper method to log actyivities held in chatbot as opposed to dedicated UI
         public Chatbot(LogService logService)
         {
             _logService = logService;

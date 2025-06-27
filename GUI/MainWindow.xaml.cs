@@ -12,15 +12,16 @@ namespace ST10318880_POE1
     {
         private Chatbot.Chatbot _chatbot;
         private string _userName = "User";
-
         private readonly LogService _logService = LogService.Instance;
 
         public MainWindow()
         {
             InitializeComponent();
-            // _logService = new LogService();
+
+            // Initialize chatbot with shared log service
             _chatbot = new Chatbot.Chatbot(_logService);
 
+            // Prompt user for name and favorite topic
             string? name = Interaction.InputBox("What is your name?", "User Name", "User");
             if (!string.IsNullOrWhiteSpace(name))
             {
@@ -38,25 +39,29 @@ namespace ST10318880_POE1
                 _chatbot.SetFavouriteTopic(topic);
             }
 
-            // Pass LogService instance here as well
+            // Load default view into the frame (Chat view)
             MainFrame.Content = new ChatPage(_chatbot, _userName, _logService);
         }
 
+        // Load Chat page when Chat button is clicked
         private void ChatButton_Click(object sender, RoutedEventArgs e)
         {
             MainFrame.Content = new ChatPage(_chatbot, _userName, _logService);
         }
 
+        // Load Task page when Task button is clicked
         private void TaskButton_Click(object sender, RoutedEventArgs e)
         {
             MainFrame.Content = new TaskPage(_logService);
         }
 
+        // Load Quiz page when Quiz button is clicked
         private void QuizButton_Click(object sender, RoutedEventArgs e)
         {
             MainFrame.Content = new QuizPage(_logService);
         }
 
+        // Load Log page when Log button is clicked
         private void LogButton_Click(object sender, RoutedEventArgs e)
         {
             MainFrame.Content = new LogPage(_logService);
